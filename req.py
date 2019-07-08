@@ -1,4 +1,4 @@
-import requests, re, time, queue, threading
+import requests, re, time, queue, threading, os.path
 from bs4 import BeautifulSoup
 from houses import get_materials
 from table import csv_dict_writer
@@ -50,61 +50,63 @@ with Profiler() as p:
         q.put(url)
 
     def worker(url_queue):
-        queue_full = True
         i = 0  # проверил, сколько регионов проходит
         while url_queue:
             url = url_queue.get(False)
-            data={
-                'current': '1',
-                'rowCount':'-1',
-                'searchPhrase':'',
-                'region_url':'{0}'.format(url)
-            }
-            test = requests.post("http://dom.mingkh.ru/api/houses", data=data) # header вроде как не понадобился
-            print(url,test.reason)
+            if not os.path.exists('{0}.tsv'.format(url)):
+                data={
+                    'current': '1',
+                    'rowCount':'-1',
+                    'searchPhrase':'',
+                    'region_url':'{0}'.format(url)
+                }
+                test = requests.post("http://dom.mingkh.ru/api/houses", data=data) # header вроде как не понадобился
+                print(url,test.reason)
 
-            path = "{0}.tsv".format(url)
+                path = "{0}.tsv".format(url)
 
-            try:
-                a = test.json()
-                i += 1
+                try:
+                    a = test.json()
+                    i += 1
 
-                houses_links = []
-                for rows in a['rows']:
-                    houses_links.append(rows['url'])
+                    houses_links = []
+                    for rows in a['rows']:
+                        houses_links.append(rows['url'])
 
-                row_index = 0
+                    row_index = 0
 
-                for house_link in houses_links:
-                    info = []
-                    constructions = []
-                    response = requests.get('http://dom.mingkh.ru{0}'.format(house_link))
-                    soup = BeautifulSoup(response.text, 'html.parser')
-                    house = soup.findAll('tr')
+                    for house_link in houses_links:
+                        info = []
+                        constructions = []
+                        response = requests.get('http://dom.mingkh.ru{0}'.format(house_link))
+                        soup = BeautifulSoup(response.text, 'html.parser')
+                        house = soup.findAll('tr')
 
-                    info.append('{0}'.format(row_index+1))
-                    info.append(a['rows'][row_index]['address'])
-                    constructions.append('#')
-                    constructions.append('Адрес')
+                        info.append('{0}'.format(row_index+1))
+                        info.append(a['rows'][row_index]['address'])
+                        constructions.append('#')
+                        constructions.append('Адрес')
 
-                    for block in house:
-                        get_materials(block, info,constructions)
+                        for block in house:
+                            get_materials(block, info,constructions)
 
-                    row_index += 1
+                        row_index += 1
 
-                    fieldnames = constructions
-                    my_list = []
-                    inner_dict = dict(zip(fieldnames, info))
-                    my_list.append(inner_dict)
-                    csv_dict_writer(path, fieldnames, my_list)
+                        fieldnames = constructions
+                        my_list = []
+                        inner_dict = dict(zip(fieldnames, info))
+                        my_list.append(inner_dict)
+                        csv_dict_writer(path, fieldnames, my_list)
 
-                    print("Адресов собрано в {0}: {1}".format(url,row_index))
-            except:
-                pass
+                        print("Адресов собрано в {0}: {1}".format(url,row_index))
+                except:
+                    pass
 
+            else:
+                continue
         print(i, " out of {0} regions are successfully checked".format(len(region_urls)))
 
-    thread_count = 4
+    thread_count = 3
     for i in range(thread_count):
         t = threading.Thread(target=worker, args=(q,))
         t.start()
