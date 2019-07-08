@@ -1,4 +1,4 @@
-import requests, re, time
+import requests, re, time, queue, threading
 from bs4 import BeautifulSoup
 from houses import get_materials
 from table import csv_dict_writer
@@ -10,12 +10,7 @@ class Profiler(object):
     def __exit__(self, type, value, traceback):
         print("Elapsed time: {:.3f} sec".format(time.time() - self._startTime))
 
-
-with Profiler() as p:
-    # засекаем время
-
-    # Сбор ссылок на области
-
+def get_region_urls(): # Сбор ссылок на области
     res = requests.get("http://dom.mingkh.ru/region/")
     region = BeautifulSoup(res.text, 'html.parser')
     base_links = \
@@ -25,78 +20,91 @@ with Profiler() as p:
         if not str(link.get('href')) in base_links and not re.match(r'#\w*', str(link.get('href'))):
             region_urls.append(str(link.get('href')).split('/')[1])
     print("Total {0} regions".format(len(region_urls)))
+    return region_urls
 
+def get_cities_urls(): # Сбор ссылок на города
     cities_urls = []
-    for each in region_urls:
+    for each in get_region_urls():
         res = requests.get('http://dom.mingkh.ru/{0}/'.format(each))
         cities = BeautifulSoup(res.text, 'html.parser')
         for link in cities.findAll('a'):
             if not str(link.get('href')) in base_links and \
-                   re.match(r'/{0}/\w*(?!year-stats)/?'.format(each), str(link.get('href'))):
-                cities_urls.append(str(link.get('href')))
+                re.match(r'/{0}/\w*(?!year-stats)/?'.format(each), str(link.get('href'))):
+                    cities_urls.append(str(link.get('href')))
+    return cities_urls
 
-    # print(cities_urls)
-    # print(len(cities_urls))
+with Profiler() as p:
+    # засекаем время
 
     # POST запрос для сбора ссылок на все дома
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 YaBrowser/19.6.1.153 Yowser/2.5 Safari/537.36',
         'X-requested-with': 'XMLHttpRequest',
         'Host': 'http://dom.mingkh.ru',
-        'Referer': 'http://dom.mingkh.ru/sverdlovskaya-oblast/ekaterinburg/',
+        'Referer': 'http://dom.mingkh.ru/',
         'Content-Type': 'application/json; charset=utf-8; charset=UTF-8'
     }
 
-    i = 0 # проверил, сколько регионов проходит
-    for each in region_urls:
-        data={
-            'current': '1',
-            'rowCount':'-1',
-            'searchPhrase':'',
-            'region_url':'{0}'.format(each)
-        }
-        test = requests.post("http://dom.mingkh.ru/api/houses", data=data) # header вроде как не понадобился
-        print(each,test.reason)
+    q = queue.Queue()
+    for url in get_region_urls():
+        q.put(url)
 
-        path = "{0}.tsv".format(each)
+    def worker(url_queue):
+        queue_full = True
+        i = 0  # проверил, сколько регионов проходит
+        while url_queue:
+            url = url_queue.get(False)
+            data={
+                'current': '1',
+                'rowCount':'-1',
+                'searchPhrase':'',
+                'region_url':'{0}'.format(url)
+            }
+            test = requests.post("http://dom.mingkh.ru/api/houses", data=data) # header вроде как не понадобился
+            print(url,test.reason)
 
-        try:
-            a = test.json()
-            i += 1
+            path = "{0}.tsv".format(url)
 
-            houses_links = []
-            for rows in a['rows']:
-                houses_links.append(rows['url'])
+            try:
+                a = test.json()
+                i += 1
 
-            row_index = 0
+                houses_links = []
+                for rows in a['rows']:
+                    houses_links.append(rows['url'])
 
-            for house_link in houses_links:
-                info = []
-                constructions = []
-                response = requests.get('http://dom.mingkh.ru{0}'.format(house_link))
-                soup = BeautifulSoup(response.text, 'html.parser')
-                house = soup.findAll('tr')
+                row_index = 0
 
-                info.append('{0}'.format(row_index+1))
-                info.append(a['rows'][row_index]['address'])
-                constructions.append('#')
-                constructions.append('Адрес')
+                for house_link in houses_links:
+                    info = []
+                    constructions = []
+                    response = requests.get('http://dom.mingkh.ru{0}'.format(house_link))
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    house = soup.findAll('tr')
 
-                for block in house:
-                    get_materials(block, info,constructions)
+                    info.append('{0}'.format(row_index+1))
+                    info.append(a['rows'][row_index]['address'])
+                    constructions.append('#')
+                    constructions.append('Адрес')
 
-                row_index += 1
+                    for block in house:
+                        get_materials(block, info,constructions)
 
-                fieldnames = constructions
-                my_list = []
-                inner_dict = dict(zip(fieldnames, info))
-                my_list.append(inner_dict)
+                    row_index += 1
 
-                #path = "D://PythonProjects/praktika/{0}.tsv".format(each)
-                csv_dict_writer(path, fieldnames, my_list)
-                print("Адресов собрано: {0}".format(row_index))
-        except:
-            pass
+                    fieldnames = constructions
+                    my_list = []
+                    inner_dict = dict(zip(fieldnames, info))
+                    my_list.append(inner_dict)
+                    csv_dict_writer(path, fieldnames, my_list)
 
+                    print("Адресов собрано в {0}: {1}".format(url,row_index))
+            except:
+                pass
 
-    print(i, " out of {0} regions are successfully checked".format(len(region_urls)))
+        print(i, " out of {0} regions are successfully checked".format(len(region_urls)))
+
+    thread_count = 4
+    for i in range(thread_count):
+        t = threading.Thread(target=worker, args=(q,))
+        t.start()
