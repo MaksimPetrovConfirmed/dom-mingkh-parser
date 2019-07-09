@@ -22,7 +22,7 @@ def handle_url(url, index):
 
         houses_links = []
         print(len(a['rows']))
-        for j in range(index,len(a['rows'])+1):
+        for j in range(index, len(a['rows'])+1):
             houses_links.append(a['rows'][j]['url'])
 
         row_index = index
