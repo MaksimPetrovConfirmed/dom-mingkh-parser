@@ -47,11 +47,10 @@ def handle_url(url, index):
 
     try:
         a = test.json()
-        i += 1
 
         houses_links = []
-        for i in range(index,len(a['rows'])):
-            houses_links.append(a['rows'][i]['url'])
+        for j in range(index,len(a['rows'])):
+            houses_links.append(a['rows'][j]['url'])
 
         row_index = 0
 
@@ -108,7 +107,7 @@ with Profiler() as p:
         q.put(url)
 
     def worker(url_queue):
-        i = 0  # проверил, сколько регионов проходит
+        ind = 0  # проверил, сколько регионов проходит
         while url_queue:
             url = url_queue.get(False);
             if not os.path.exists('{0}.tsv'.format(url)):
@@ -121,10 +120,12 @@ with Profiler() as p:
                     'region_url': '{0}'.format(url)
                 }
                 test = requests.post("http://dom.mingkh.ru/api/houses", data=data)
-                if len(test.json()['rows']) != count_lines('{0}'.format(url))/2:
-                    handle_url(url, count_lines('{0}'.format(url))/2)
+                print(len(test.json()['rows']), count_lines('{0}.tsv'.format(url))//2)
+                if len(test.json()['rows']) != count_lines('{0}.tsv'.format(url))//2:
+                    handle_url(url, 1 + count_lines('{0}.tsv'.format(url))//2)
 
-        print(i, " out of {0} regions are successfully checked".format(len(region_urls)))
+            ind+=1
+        print(ind, " out of {0} regions are successfully checked".format(len(get_region_urls())))
 
     thread_count = 3
     for i in range(thread_count):
