@@ -10,7 +10,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/handler.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="765">
@@ -25,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/houses.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
+            <state relative-caret-position="35">
               <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -46,23 +46,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/req.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-178">
-              <caret line="95" column="12" selection-start-line="95" selection-start-column="12" selection-end-line="95" selection-end-column="12" />
+            <state relative-caret-position="34">
+              <caret line="49" column="27" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="27" />
               <folding>
-                <element signature="e#0#52#0" expanded="true" />
                 <element signature="e#179#366#0" />
                 <element signature="e#420#965#0" />
                 <element signature="e#1018#1472#0" />
                 <element signature="e#2953#3054#0" />
+                <element signature="e#1677#3052#0" />
                 <element signature="e#3161#3539#0" />
+                <element signature="e#3496#4499#0" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/permskiy-kray.tsv">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -80,7 +76,6 @@
       <find>&lt;tb</find>
       <find>&lt;td</find>
       <find>tbody</find>
-      <find>25 октября</find>
       <find>r</find>
       <find>rownumber&quot;: &quot;25</find>
       <find>alta</find>
@@ -92,6 +87,8 @@
       <find>текстильщиков</find>
       <find>лермонтова, д. 21</find>
       <find>адмиралтейская, д. 10</find>
+      <find>25 октября</find>
+      <find>нахимова, д. 36</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Maksim\Desktop\praktika</dir>
@@ -119,10 +116,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="948" />
-    <option name="width" value="981" />
-    <option name="height" value="1092" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-11" />
+    <option name="width" value="980" />
+    <option name="height" value="1091" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -211,14 +208,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="735" extended-state="6" />
+    <frame x="-7" y="0" width="653" height="727" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49725273" visible="true" weight="0.17488076" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49725273" visible="true" weight="0.35714287" />
       <window_info id="Structure" order="1" sideWeight="0.50274724" side_tool="true" weight="0.24960254" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49841017" visible="true" weight="0.22719735" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49841017" visible="true" weight="0.30252102" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39966834" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -301,27 +299,6 @@
         <state relative-caret-position="-22372" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/krasnodarskiy-kray.tsv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="21902" lean-forward="true" selection-start-line="21902" selection-end-line="21902" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/moskva.tsv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/krasnoyarskiy-kray.tsv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="20440" lean-forward="true" selection-start-line="20440" selection-end-line="20440" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chukotskiy-ao.tsv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-45006" />
@@ -338,19 +315,85 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sankt-peterburg.tsv">
-      <provider selected="true" editor-type-id="text-editor">
+      <provider editor-type-id="text-editor">
         <state relative-caret-position="-109042">
           <caret line="1" column="30" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="30" />
         </state>
       </provider>
-      <provider editor-type-id="LargeFileEditor">
-        <state relative-caret-position="-37008" />
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="-36882" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sevastopol.tsv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
+        <state relative-caret-position="-859">
           <caret line="7446" selection-start-line="7446" selection-end-line="7446" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/krasnoyarskiy-kray.tsv">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="20440" lean-forward="true" selection-start-line="20440" selection-end-line="20440" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="1207">
+          <caret line="71" selection-start-line="71" selection-end-line="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/permskiy-kray.tsv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="4987" column="36" selection-start-line="4987" selection-start-column="21" selection-end-line="4987" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/krasnodarskiy-kray.tsv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-325975">
+          <caret line="21902" selection-start-line="21902" selection-end-line="21902" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/moskva.tsv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/req.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="49" column="27" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="27" />
+          <folding>
+            <element signature="e#179#366#0" />
+            <element signature="e#420#965#0" />
+            <element signature="e#1018#1472#0" />
+            <element signature="e#2953#3054#0" />
+            <element signature="e#1677#3052#0" />
+            <element signature="e#3161#3539#0" />
+            <element signature="e#3496#4499#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/table.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/houses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -363,41 +406,6 @@
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/houses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/table.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/req.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-178">
-          <caret line="95" column="12" selection-start-line="95" selection-start-column="12" selection-end-line="95" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-            <element signature="e#179#366#0" />
-            <element signature="e#420#965#0" />
-            <element signature="e#1018#1472#0" />
-            <element signature="e#2953#3054#0" />
-            <element signature="e#3161#3539#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/permskiy-kray.tsv">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
