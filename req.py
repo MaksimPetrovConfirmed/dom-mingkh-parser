@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 from houses import get_materials
 from table import csv_dict_writer
 
+
+# from handler import handle_url
+
 class Profiler(object):
     def __enter__(self):
         self._startTime = time.time()
@@ -10,7 +13,8 @@ class Profiler(object):
     def __exit__(self, type, value, traceback):
         print("Elapsed time: {:.3f} sec".format(time.time() - self._startTime))
 
-def get_region_urls(): # Сбор ссылок на области
+
+def get_region_urls():  # Сбор ссылок на области
     res = requests.get("http://dom.mingkh.ru/region/")
     region = BeautifulSoup(res.text, 'html.parser')
     base_links = \
@@ -22,18 +26,29 @@ def get_region_urls(): # Сбор ссылок на области
     print("Total {0} regions".format(len(region_urls)))
     return region_urls
 
-def get_cities_urls(): # Сбор ссылок на города
+
+def get_cities_urls():  # Сбор ссылок на города
     cities_urls = []
     for each in get_region_urls():
         res = requests.get('http://dom.mingkh.ru/{0}/'.format(each))
         cities = BeautifulSoup(res.text, 'html.parser')
         for link in cities.findAll('a'):
             if not str(link.get('href')) in base_links and \
-                re.match(r'/{0}/\w*(?!year-stats)/?'.format(each), str(link.get('href'))):
-                    cities_urls.append(str(link.get('href')))
+                    re.match(r'/{0}/\w*(?!year-stats)/?'.format(each), str(link.get('href'))):
+                cities_urls.append(str(link.get('href')))
     return cities_urls
 
+
+def count_lines(file):
+    try:
+        with open(file) as f:
+            return len(f.readlines())
+    except:
+        return 0
+
+
 def handle_url(url, index):
+    # POST запрос для сбора ссылок на все дома
     data = {
         'current': '1',
         'rowCount': '-1',
@@ -49,10 +64,11 @@ def handle_url(url, index):
         a = test.json()
 
         houses_links = []
-        for j in range(index,len(a['rows'])):
-            houses_links.append(a['rows'][j]['url'])
+        print(len(a["rows"]))
+        for j in range(index, len(a["rows"])):
+            houses_links.append(a["rows"][j]["url"])
 
-        row_index = 0
+        row_index = index
 
         for house_link in houses_links:
             info = []
@@ -62,7 +78,7 @@ def handle_url(url, index):
             house = soup.findAll('tr')
 
             info.append('{0}'.format(row_index + 1))
-            info.append(a['rows'][row_index]['address'])
+            info.append(a["rows"][row_index]["address"])
             constructions.append('#')
             constructions.append('Адрес')
 
@@ -78,41 +94,33 @@ def handle_url(url, index):
             csv_dict_writer(path, fieldnames, my_list)
 
             print("Адресов собрано в {0}: {1}".format(url, row_index))
+
     except:
         pass
 
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 YaBrowser/19.6.1.153 Yowser/2.5 Safari/537.36',
+    'X-requested-with': 'XMLHttpRequest',
+    'Host': 'http://dom.mingkh.ru',
+    'Referer': 'http://dom.mingkh.ru/',
+    'Content-Type': 'application/json; charset=utf-8; charset=UTF-8'
+}
 
-def count_lines(file):
-    try:
-        with open(file) as f:
-            return len(f.readlines())
-    except:
-        return 0
+q = queue.Queue()
+for url in get_region_urls():
+    q.put(url)
 
-with Profiler() as p:
-    # засекаем время
 
-    # POST запрос для сбора ссылок на все дома
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 YaBrowser/19.6.1.153 Yowser/2.5 Safari/537.36',
-        'X-requested-with': 'XMLHttpRequest',
-        'Host': 'http://dom.mingkh.ru',
-        'Referer': 'http://dom.mingkh.ru/',
-        'Content-Type': 'application/json; charset=utf-8; charset=UTF-8'
-    }
-
-    q = queue.Queue()
-    for url in get_region_urls():
-        q.put(url)
-
-    def worker(url_queue):
-        ind = 0  # проверил, сколько регионов проходит
-        while url_queue:
+def worker(url_queue):
+    ind = 0  # проверил, сколько регионов проходит
+    while url_queue:
+        with Profiler() as p:
+            # засекаем время
             url = url_queue.get(False);
             if not os.path.exists('{0}.tsv'.format(url)):
-                handle_url(url,0)
-            elif os.path.exists('{0}.tsv'.format(url)):
+                handle_url(url, 0)
+            if os.path.exists('{0}.tsv'.format(url)):
                 data = {
                     'current': '1',
                     'rowCount': '-1',
@@ -120,14 +128,16 @@ with Profiler() as p:
                     'region_url': '{0}'.format(url)
                 }
                 test = requests.post("http://dom.mingkh.ru/api/houses", data=data)
-                print(len(test.json()['rows']), count_lines('{0}.tsv'.format(url))//2)
-                if len(test.json()['rows']) != count_lines('{0}.tsv'.format(url))//2:
-                    handle_url(url, 1 + count_lines('{0}.tsv'.format(url))//2)
+                print(len(test.json()["rows"]), (count_lines('{0}.tsv'.format(url)) - 1) // 2)
+                if len(test.json()["rows"]) + 1 != (count_lines('{0}.tsv'.format(url)) - 1) // 2:
+                    handle_url(url, (1 + count_lines('{0}.tsv'.format(url))) // 2)
 
-            ind+=1
-        print(ind, " out of {0} regions are successfully checked".format(len(get_region_urls())))
+            ind += 1
 
-    thread_count = 3
-    for i in range(thread_count):
-        t = threading.Thread(target=worker, args=(q,))
-        t.start()
+    print(ind, " out of {0} regions are successfully checked".format(len(get_region_urls())))
+
+
+thread_count = 3
+for i in range(thread_count):
+    t = threading.Thread(target=worker, args=(q,))
+    t.start()
