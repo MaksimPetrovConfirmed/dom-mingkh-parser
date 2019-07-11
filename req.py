@@ -93,7 +93,7 @@ def handle_url(url, index):
             my_list.append(inner_dict)
             csv_dict_writer(path, fieldnames, my_list)
 
-            print("Адресов собрано в {0}: {1}".format(url, row_index))
+            print("Домов собрано в {0}: {1}".format(url, row_index))
 
     except:
         pass
@@ -137,7 +137,7 @@ def worker(url_queue):
     print(ind, " out of {0} regions are successfully checked".format(len(get_region_urls())))
 
 
-thread_count = 3
+thread_count = 6
 for i in range(thread_count):
     t = threading.Thread(target=worker, args=(q,))
     t.start()
