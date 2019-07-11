@@ -43,10 +43,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/req.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1930">
-              <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+            <state relative-caret-position="155">
+              <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
               <folding>
-                <element signature="e#0#52#0" expanded="true" />
+                <element signature="e#214#401#0" />
+                <element signature="e#457#1002#0" />
+                <element signature="e#1057#1511#0" />
+                <element signature="e#1541#1642#0" />
+                <element signature="e#1677#3138#0" />
+                <element signature="e#3599#4597#0" />
               </folding>
             </state>
           </provider>
@@ -107,7 +112,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-11" />
     <option name="width" value="980" />
     <option name="height" value="1091" />
@@ -118,18 +123,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="dom-mingkh-parser-threads" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dom-mingkh-parser-threads" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -208,7 +203,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49725273" visible="true" weight="0.12065332" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49725273" visible="true" weight="0.23972602" />
       <window_info id="Structure" order="1" sideWeight="0.50274724" side_tool="true" weight="0.24960254" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -316,13 +311,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sankt-peterburg.tsv">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="-36882" />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="-109042">
           <caret line="1" column="30" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="30" />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="-36882" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sevastopol.tsv">
@@ -333,14 +328,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/krasnoyarskiy-kray.tsv">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="20440" lean-forward="true" selection-start-line="20440" selection-end-line="20440" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="LargeFileEditor">
         <state relative-caret-position="1207">
           <caret line="71" selection-start-line="71" selection-end-line="71" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="20440" lean-forward="true" selection-start-line="20440" selection-end-line="20440" />
         </state>
       </provider>
     </entry>
@@ -391,10 +386,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/req.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1930">
-          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+        <state relative-caret-position="155">
+          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
           <folding>
-            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#214#401#0" />
+            <element signature="e#457#1002#0" />
+            <element signature="e#1057#1511#0" />
+            <element signature="e#1541#1642#0" />
+            <element signature="e#1677#3138#0" />
+            <element signature="e#3599#4597#0" />
           </folding>
         </state>
       </provider>
